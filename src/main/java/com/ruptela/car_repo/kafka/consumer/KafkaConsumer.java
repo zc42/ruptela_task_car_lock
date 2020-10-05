@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 
-import static com.ruptela.car_repo.kafka.producer.KafkaProducer.topic;
+
 
 public class KafkaConsumer {
 
@@ -22,7 +22,7 @@ public class KafkaConsumer {
     @Autowired
     private CarService cars;
 
-    @KafkaListener(topics = topic)
+    @KafkaListener(topics = "${resource.kafka_topic}")
     public void receiveMessage(String msg) {
 
         if (msg == null || msg.isEmpty()) {
@@ -43,8 +43,9 @@ public class KafkaConsumer {
         }
         car.setLocked(Boolean.valueOf(l.get(1)));
         cars.save(car);
-
         latch.countDown();
+
+        System.out.println(l);
     }
 
     public CountDownLatch getLatch() {

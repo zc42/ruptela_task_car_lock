@@ -3,6 +3,7 @@ package com.ruptela.car_repo.redis;
 import com.ruptela.car_repo.entity.Car;
 import com.ruptela.car_repo.entity.Maker;
 import com.ruptela.car_repo.entity.Model;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -11,11 +12,16 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 public class RedisConfig {
 
+    @Value("${resource.redis_host}")
+    private String host;
+    @Value("${resource.redis_port}")
+    private Integer port;
+
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
         LettuceConnectionFactory lcf = new LettuceConnectionFactory();
-        lcf.setHostName("localhost");
-        lcf.setPort(6379);
+        lcf.setHostName(host);
+        lcf.setPort(port);
         lcf.afterPropertiesSet();
         return lcf;
     }

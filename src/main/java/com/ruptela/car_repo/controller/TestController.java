@@ -68,8 +68,8 @@ public class TestController {
 
     @GetMapping(path = "/get_all_cars")
     public @ResponseBody
-    List<Car> GetAllCars() {
-        return carRepository.all_cars();
+    Iterable<Car> GetAllCars() {
+        return carRepository.findAll();
     }
 
     @GetMapping(path = "/msg_2_kafka")
