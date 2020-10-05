@@ -4,7 +4,6 @@ import com.ruptela.car_repo.entity.Model;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,26 +14,28 @@ abstract public class RedisRepo<ID, V> {
     private Integer time_out;
 
     protected final String key;
-    protected final RedisTemplate<String, V> redisTemplate;
     protected final HashOperations hashOperations;
-    private final Function<V, String> f;
+    private final Function<V, ID> f;
 
-    public RedisRepo(RedisTemplate<String, V> redisTemplate,
-                     String key,
-                     Function<V, String> f) {
+    public RedisRepo(String key,
+                     HashOperations hashOperations,
+                     Function<V, ID> f) {
         this.key = key;
-        this.redisTemplate = redisTemplate;
-        hashOperations = redisTemplate.opsForHash();
+        this.hashOperations = hashOperations;
         this.f = f;
     }
 
-    public void save(V v) {
-        redisTemplate.opsForHash().put(key, f.apply(v), v);
+    private void _save(V v) {
+        hashOperations.put(key, f.apply(v), v);
     }
 
-    public void save_with_time_out(V v) {
-        save(v);
-        redisTemplate.expire(key, time_out, TimeUnit.MINUTES);
+    public void save(V v) {
+        _save(v);
+    }
+
+    public void save(RedisTemplate rt, V v) {
+        _save(v);
+        rt.expire(key, time_out, TimeUnit.MINUTES);
     }
 
     public Map<String, Model> findAll() {

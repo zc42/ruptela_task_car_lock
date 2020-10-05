@@ -1,7 +1,7 @@
 package com.ruptela.car_repo.service;
 
-import com.ruptela.car_repo.controller.ControllerException;
-import com.ruptela.car_repo.controller.RetCodes;
+import com.ruptela.car_repo.controller.parts.ControllerException;
+import com.ruptela.car_repo.controller.parts.RetCodes;
 import com.ruptela.car_repo.entity.Car;
 import com.ruptela.car_repo.kafka.producer.KafkaProducer;
 import com.ruptela.car_repo.redis.repos.RedisCarRepo;

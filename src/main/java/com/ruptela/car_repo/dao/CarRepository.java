@@ -6,11 +6,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface CarRepository extends CrudRepository<Car, String> {
-
-//    @Query("SELECT a FROM cars a")
-//    List<Car> all_cars();
-
-//    @Query("SELECT u FROM User u WHERE u.status = ?1 and u.name = ?2")
-//    User findUserByStatusAndName(Integer status, String name);
-
 }

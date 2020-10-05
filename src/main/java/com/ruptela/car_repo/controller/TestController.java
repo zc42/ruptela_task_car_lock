@@ -7,8 +7,6 @@ import com.ruptela.car_repo.entity.Model;
 import com.ruptela.car_repo.kafka.producer.KafkaProducer;
 import com.ruptela.car_repo.redis.repos.RedisModelRepo;
 import com.ruptela.car_repo.rest_client.VechileAPIClient;
-import com.ruptela.car_repo.service.CarLockService;
-import com.ruptela.car_repo.service.CarService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +29,6 @@ public class TestController {
     private RedisModelRepo modelRepo;
     @Autowired
     private KafkaProducer kafkaProducer;
-    @Autowired
-    private CarService carService;
-    @Autowired
-    private CarLockService carLockService;
 
     @GetMapping(path = "/get_makes")
     public @ResponseBody

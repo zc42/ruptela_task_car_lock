@@ -3,18 +3,11 @@ package com.ruptela.car_repo.entity;
 import java.io.Serializable;
 import java.util.Map;
 
-//@Entity(name = "models")
-//@Table(indexes = {
-//    @Index(name = "indx__make_id_model_name", columnList = "Make_Name, Model_Name", unique = true)})
 public class Model implements Serializable {
 
-//    @Id
     private Integer Model_ID;
-//    @Column(nullable = false)
     private String Make_Name;
-//    @Column(nullable = false)
     private String Model_Name;
-//    @Transient
     private boolean exists = true;
 
     public Model() {

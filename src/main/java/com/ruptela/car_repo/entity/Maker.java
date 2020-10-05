@@ -3,14 +3,10 @@ package com.ruptela.car_repo.entity;
 import java.io.Serializable;
 import java.util.Map;
 
-//@Entity(name = "makers")
 public class Maker implements Serializable {
 
-//    @Id
     private Integer Make_ID;
-//    @Column(nullable = false)
     private String Make_Name;
-//    @Transient
     private boolean exists;
 
     public Maker() {

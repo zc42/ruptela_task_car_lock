@@ -1,4 +1,4 @@
-package com.ruptela.car_repo.controller;
+package com.ruptela.car_repo.controller.parts;
 
 public enum RetCodes {
     err_no_car_found,

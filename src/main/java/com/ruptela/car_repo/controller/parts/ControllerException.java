@@ -1,4 +1,4 @@
-package com.ruptela.car_repo.controller;
+package com.ruptela.car_repo.controller.parts;
 
 public class ControllerException extends Throwable {
 

@@ -1,8 +1,8 @@
 package com.ruptela.car_repo;
 
-import com.ruptela.car_repo.controller.ControllerException;
+import com.ruptela.car_repo.controller.parts.ControllerException;
 import com.ruptela.car_repo.controller.TopUseCaseController;
-import com.ruptela.car_repo.controller.RetCodes;
+import com.ruptela.car_repo.controller.parts.RetCodes;
 import com.ruptela.car_repo.entity.Car;
 
 import java.util.List;

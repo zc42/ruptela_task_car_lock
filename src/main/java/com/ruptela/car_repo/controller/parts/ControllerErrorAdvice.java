@@ -1,4 +1,4 @@
-package com.ruptela.car_repo.controller;
+package com.ruptela.car_repo.controller.parts;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

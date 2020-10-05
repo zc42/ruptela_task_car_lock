@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RedisCarRepo extends RedisRepo<String, Car> {
 
-    public RedisCarRepo(RedisTemplate<String, Car> redisTemplate) {
-        super(redisTemplate, "CAR", e -> e.getVin());
+    public RedisCarRepo(RedisTemplate<String, Car> rt) {
+        super("CAR", rt.opsForHash(), e -> e.getVin());
     }
 
     @Override
