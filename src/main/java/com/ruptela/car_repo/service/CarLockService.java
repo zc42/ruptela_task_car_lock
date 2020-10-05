@@ -42,10 +42,10 @@ public class CarLockService {
 
     private RetCodes lock_car_redis(Car car, boolean lock, String vin) throws ControllerException {
         if (!car.isExists()) {
-            throw new ControllerException(RetCodes.err_no_car_found);
+            throw ControllerException.from(RetCodes.err_no_car_found);
         }
         if (lock == car.isLocked()) {
-            throw new ControllerException(RetCodes.car_is_allready_in_state(lock));
+            throw ControllerException.from(RetCodes.car_is_allready_in_state(lock));
         }
 
         car.setLocked(lock);
@@ -58,7 +58,7 @@ public class CarLockService {
         Car car = carService.findById(vin);
         if (car != null) {
             if (lock == car.isLocked()) {
-                throw new ControllerException(RetCodes.car_is_allready_in_state(lock));
+                throw ControllerException.from(RetCodes.car_is_allready_in_state(lock));
             }
             car.setLocked(lock);
             redis.save(car);
@@ -66,7 +66,7 @@ public class CarLockService {
             return RetCodes.ok;
         } else {
             redis.save(Car.from(vin));
-            throw new ControllerException(RetCodes.err_no_car_found);
+            throw ControllerException.from(RetCodes.err_no_car_found);
         }
     }
 
@@ -81,7 +81,7 @@ public class CarLockService {
         if (car.isExists()) {
             return RetCodes.car_state_is(car.isLocked());
         }
-        throw new ControllerException(RetCodes.err_no_car_found);
+        throw ControllerException.from(RetCodes.err_no_car_found);
     }
 
     private RetCodes car_state_persist(String vin) throws ControllerException {
@@ -91,7 +91,7 @@ public class CarLockService {
             return RetCodes.car_state_is(car.isLocked());
         } else {
             redis.save(Car.from(vin));
-            throw new ControllerException(RetCodes.err_no_car_found);
+            throw ControllerException.from(RetCodes.err_no_car_found);
         }
     }
 }
