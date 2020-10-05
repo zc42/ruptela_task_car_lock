@@ -36,12 +36,14 @@ class CarRepoApplicationTest {
     @Test
     @Transactional
     void list() throws ControllerException {
-        List<Car> l0 = IntStream.range(0, 100)
+        List<Car> l0 = IntStream
+                .range(0, 100)
                 .boxed()
                 .map(e->car("asdfg_123456_" + e))
                 .collect(toList());
 
-        List<Car> l1 = Streams.stream(c.listCars())
+        List<Car> l1 = Streams
+                .stream(c.listCars())
                 .collect(toList());
 
         assertTrue(l1.containsAll(l0));
