@@ -1,3 +1,18 @@
+spring boot app
+===========
+use cases:
+---
+create car
+
+list created cars
+
+car lock/unlock
+
+get car state (lock/unlock)
+
+setup:
+--
+
 install redis
 
 install kafka
@@ -9,8 +24,13 @@ create db schema
 >
 >CREATE DATABASE IF NOT EXISTS ruptela_car;
 
-build jar and run test cases
+build and test:
+--
+
+>cd <project_dir>
+>
 >mvn clean package spring-boot:repackage
 
-start service
+run:
+--
 >java -jar target/CarRepo-0.0.1-SNAPSHOT.jar
