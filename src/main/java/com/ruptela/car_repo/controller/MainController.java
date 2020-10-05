@@ -21,7 +21,7 @@ public class MainController {
 
     @GetMapping(path = "/create_car")
     public @ResponseBody
-    String createCar(@RequestParam String vin,
+    Car createCar(@RequestParam String vin,
                      @RequestParam String make,
                      @RequestParam String model,
                      @RequestParam(required = false) String plate_nb) throws ControllerException {

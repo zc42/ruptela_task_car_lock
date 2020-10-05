@@ -18,7 +18,7 @@ public class CarService {
     @Autowired
     private RedisCarRepo redis;
 
-    public String create(String vin, String make, String model, String plate_nb) throws ControllerException {
+    public Car create(String vin, String make, String model, String plate_nb) throws ControllerException {
 
         Car car = Car.from(make, model, vin, plate_nb);
         if (!vechiles.maker_model_exist(car)) {
@@ -36,7 +36,7 @@ public class CarService {
         carRepository.save(car);
         redis.save(car);
 
-        return "Saved";
+        return car;
     }
 
     public Iterable<Car> list_cars() {
