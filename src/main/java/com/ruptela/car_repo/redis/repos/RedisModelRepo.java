@@ -1,7 +1,7 @@
-package com.ruptela.car_repo.redis;
+package com.ruptela.car_repo.redis.repos;
 
 import com.ruptela.car_repo.entity.Model;
-import java.util.concurrent.TimeUnit;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,6 @@ public class RedisModelRepo extends RedisRepo<String, Model> {
 
     @Override
     public void save(Model v) {
-        super.save(v);
-        super.redisTemplate.expire(key, 1, TimeUnit.HOURS);
+        super.save_with_time_out(v);
     }
 }

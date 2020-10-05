@@ -1,4 +1,4 @@
-package com.ruptela.car_repo.redis;
+package com.ruptela.car_repo.redis.repos;
 
 import com.ruptela.car_repo.entity.Car;
 import org.springframework.data.redis.core.RedisTemplate;

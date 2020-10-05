@@ -5,7 +5,7 @@ import com.ruptela.car_repo.entity.Car;
 import com.ruptela.car_repo.entity.Maker;
 import com.ruptela.car_repo.entity.Model;
 import com.ruptela.car_repo.kafka.producer.KafkaProducer;
-import com.ruptela.car_repo.redis.RedisModelRepo;
+import com.ruptela.car_repo.redis.repos.RedisModelRepo;
 import com.ruptela.car_repo.rest_client.VechileAPIClient;
 import com.ruptela.car_repo.service.CarLockService;
 import com.ruptela.car_repo.service.CarService;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import static java.util.stream.Collectors.toList;
 
 @Controller
-@RequestMapping(path = "/demo")
+@RequestMapping(path = "/demo_test")
 public class TestController {
 
     @Autowired

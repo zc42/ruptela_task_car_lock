@@ -4,7 +4,7 @@ import com.ruptela.car_repo.controller.ControllerException;
 import com.ruptela.car_repo.controller.RetCodes;
 import com.ruptela.car_repo.entity.Car;
 import com.ruptela.car_repo.kafka.producer.KafkaProducer;
-import com.ruptela.car_repo.redis.RedisCarRepo;
+import com.ruptela.car_repo.redis.repos.RedisCarRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

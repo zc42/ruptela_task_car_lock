@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(path = "/demo")
-public class MainController {
+@RequestMapping(path = "${resource.controller_req_path}")
+public class TopUseCaseController {
 
     @Autowired
     private CarService carService;

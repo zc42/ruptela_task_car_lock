@@ -3,7 +3,7 @@ package com.ruptela.car_repo.service;
 import com.ruptela.car_repo.controller.ControllerException;
 import com.ruptela.car_repo.dao.CarRepository;
 import com.ruptela.car_repo.entity.Car;
-import com.ruptela.car_repo.redis.RedisCarRepo;
+import com.ruptela.car_repo.redis.repos.RedisCarRepo;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

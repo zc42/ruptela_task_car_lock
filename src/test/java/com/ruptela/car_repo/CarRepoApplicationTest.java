@@ -1,13 +1,12 @@
 package com.ruptela.car_repo;
 
 import com.ruptela.car_repo.controller.ControllerException;
-import com.ruptela.car_repo.controller.MainController;
+import com.ruptela.car_repo.controller.TopUseCaseController;
 import com.ruptela.car_repo.controller.RetCodes;
 import com.ruptela.car_repo.entity.Car;
 
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import org.assertj.core.util.Streams;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CarRepoApplicationTest {
 
     @Autowired
-    MainController c;
+    TopUseCaseController c;
 
     @Test
     @Transactional
