@@ -4,7 +4,11 @@ import com.ruptela.car_repo.controller.ControllerException;
 import com.ruptela.car_repo.controller.MainController;
 import com.ruptela.car_repo.controller.RetCodes;
 import com.ruptela.car_repo.entity.Car;
+
+import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 import org.assertj.core.util.Streams;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.Transactional;
 
+import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -31,15 +36,15 @@ class CarRepoApplicationTest {
     @Test
     @Transactional
     void list() throws ControllerException {
-        int c0 = 100;
-        IntStream.range(0, c0)
+        List<Car> l0 = IntStream.range(0, 100)
                 .boxed()
-                .forEach(e -> car("asdfg_123456_" + e));
+                .map(e->car("asdfg_123456_" + e))
+                .collect(toList());
 
-        Iterable<Car> l = c.listCars();
+        List<Car> l1 = Streams.stream(c.listCars())
+                .collect(toList());
 
-        long c1 = Streams.stream(l).count();
-        assertTrue(c1 >= c0);
+        assertTrue(l1.containsAll(l0));
     }
 
     @Test

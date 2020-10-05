@@ -1,7 +1,8 @@
 package com.ruptela.car_repo.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.*;
 
 @Entity(name = "cars")
 public class Car implements Serializable {
@@ -17,7 +18,7 @@ public class Car implements Serializable {
     @Column(nullable = false)
     private boolean locked = false;
     @Transient
-    private boolean exists=true;
+    private boolean exists = true;
 
     public Car() {
     }
@@ -88,6 +89,51 @@ public class Car implements Serializable {
 
     public void setExists(boolean exists) {
         this.exists = exists;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.vin);
+        hash = 97 * hash + Objects.hashCode(this.make);
+        hash = 97 * hash + Objects.hashCode(this.model);
+        hash = 97 * hash + Objects.hashCode(this.plate_nb);
+        hash = 97 * hash + (this.locked ? 1 : 0);
+        hash = 97 * hash + (this.exists ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Car other = (Car) obj;
+        if (this.locked != other.locked) {
+            return false;
+        }
+        if (this.exists != other.exists) {
+            return false;
+        }
+        if (!Objects.equals(this.vin, other.vin)) {
+            return false;
+        }
+        if (!Objects.equals(this.make, other.make)) {
+            return false;
+        }
+        if (!Objects.equals(this.model, other.model)) {
+            return false;
+        }
+        if (!Objects.equals(this.plate_nb, other.plate_nb)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
