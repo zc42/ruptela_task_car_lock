@@ -44,8 +44,6 @@ public class KafkaConsumer {
         car.setLocked(Boolean.valueOf(l.get(1)));
         cars.save(car);
         latch.countDown();
-
-        System.out.println(l);
     }
 
     public CountDownLatch getLatch() {
