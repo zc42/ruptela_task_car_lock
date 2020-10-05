@@ -13,9 +13,9 @@ get car state (lock/unlock)
 setup:
 --
 
-install redis
-
 install kafka
+
+install redis
 
 install mysql
 
