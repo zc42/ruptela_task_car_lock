@@ -42,22 +42,25 @@ app logic
     - check if maker and model exist
     - maker
 	    redis find e
-	    if found and existing return true 
-	    if found and non-existing return false
+	    if found return e.exists() 
 	    else
 	        if redis maker repo is empty
-	            check external api 
-	            if found store data to redis and return true
-	            else redis store data as non-existing
-	    return false
+	            get data from external api
+	            redis store external api data
+	            redis find e 
+	            if found return e.exists()
+	        redis store non existing e        
+	        return e.exists()
 	- model 
 	    redis find e 
-		    if found and exists return true 
-		    if found and non-existing return false
+		    if found return e.exists() 
 		    else
-			    check external api
-			    if found store data to redis and return true
-			    else redis store data as non-existing and return false
+		        get data from external api
+		        redis store external api data
+		        redis find e
+		        if found return e.exists()
+		        redis store non existing e
+		        return e.exists()
 	
 	if maker and model exists
 		save car to
