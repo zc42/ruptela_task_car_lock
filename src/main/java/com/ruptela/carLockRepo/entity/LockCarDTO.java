@@ -14,10 +14,10 @@ public class LockCarDTO {
     private Boolean lock;
 
     static public LockCarDTO from(String vin, Boolean lock) {
-        LockCarDTO o = new LockCarDTO();
-        o.vin = vin;
-        o.lock = lock;
-        return o;
+        LockCarDTO r = new LockCarDTO();
+        r.vin = vin;
+        r.lock = lock;
+        return r;
     }
 
     @Override
