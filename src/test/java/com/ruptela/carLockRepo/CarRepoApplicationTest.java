@@ -13,7 +13,6 @@ import com.ruptela.carLockRepo.redis.repos.RedisCarRepo;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
-import org.assertj.core.util.Streams;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,16 +60,14 @@ class CarRepoApplicationTest {
     @Test
     @Transactional
     void list() throws ControllerException {
-        List<Car> l0 = IntStream
+        List<CarDTO> l0 = IntStream
                 .range(0, 100)
                 .boxed()
                 .map(e -> car(vin + e))
+                .map(e -> CarDTO.from(e))
                 .collect(toList());
 
-        List<Car> l1 = Streams
-                .stream(carCntrl.listCars())
-                .collect(toList());
-
+        List<CarDTO> l1 = carCntrl.listCars();
         assertTrue(l1.containsAll(l0));
     }
 
