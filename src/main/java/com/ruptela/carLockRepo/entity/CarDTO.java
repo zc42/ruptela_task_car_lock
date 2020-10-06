@@ -21,21 +21,21 @@ public class CarDTO {
                               String make,
                               String model,
                               String plateNb) {
-        CarDTO o = new CarDTO();
-        o.vin = vin;
-        o.make = make;
-        o.model = model;
-        o.plateNb = plateNb;
-        return o;
+        CarDTO r = new CarDTO();
+        r.vin = vin;
+        r.make = make;
+        r.model = model;
+        r.plateNb = plateNb;
+        return r;
     }
 
-    public static CarDTO from(Car e) {
-        CarDTO o = new CarDTO();
-        o.vin = e.getVin();
-        o.make = e.getMake();
-        o.model = e.getModel();
-        o.plateNb = e.getPlateNb();
-        return o;
+    public static CarDTO from(Car car) {
+        CarDTO r = new CarDTO();
+        r.vin = car.getVin();
+        r.make = car.getMake();
+        r.model = car.getModel();
+        r.plateNb = car.getPlateNb();
+        return r;
     }
 
     @Override

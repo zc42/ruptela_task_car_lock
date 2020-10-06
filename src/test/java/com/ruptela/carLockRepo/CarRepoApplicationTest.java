@@ -63,8 +63,7 @@ class CarRepoApplicationTest {
         List<CarDTO> l0 = IntStream
                 .range(0, 100)
                 .boxed()
-                .map(e -> car(vin + e))
-                .map(e -> CarDTO.from(e))
+                .map(e -> CarDTO.from(car(vin + e)))
                 .collect(toList());
 
         List<CarDTO> l1 = carCntrl.listCars();
