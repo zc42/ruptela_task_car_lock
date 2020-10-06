@@ -33,14 +33,14 @@ public class CarLockService {
     else
         redis save e with state not exist
      */
-    public RetCodes lock_car(String vin, boolean lock) throws ControllerException {
+    public RetCodes lockCar(String vin, boolean lock) throws ControllerException {
         Car car = redis.findById(vin);
         return car != null
-               ? lock_car_redis(car, lock, vin)
-               : lock_car_persist(vin, lock);
+               ? lockCarRedis(car, lock, vin)
+               : lockCarPersist(vin, lock);
     }
 
-    private RetCodes lock_car_redis(Car car, boolean lock, String vin) throws ControllerException {
+    private RetCodes lockCarRedis(Car car, boolean lock, String vin) throws ControllerException {
         if (!car.isExists()) {
             throw ControllerException.from(RetCodes.err_no_car_found);
         }
@@ -54,7 +54,7 @@ public class CarLockService {
         return RetCodes.ok;
     }
 
-    private RetCodes lock_car_persist(String vin, boolean lock) throws ControllerException {
+    private RetCodes lockCarPersist(String vin, boolean lock) throws ControllerException {
         Car car = carService.findById(vin);
         if (car != null) {
             if (lock == car.isLocked()) {
@@ -70,21 +70,21 @@ public class CarLockService {
         }
     }
 
-    public RetCodes get_car_state(String vin) throws ControllerException {
+    public RetCodes getCarState(String vin) throws ControllerException {
         Car car = redis.findById(vin);
         return car != null
-               ? car_state_redis(car)
-               : car_state_persist(vin);
+               ? getCarStateFromRedis(car)
+               : getCarStateFromPersist(vin);
     }
 
-    private RetCodes car_state_redis(Car car) throws ControllerException {
+    private RetCodes getCarStateFromRedis(Car car) throws ControllerException {
         if (car.isExists()) {
             return RetCodes.car_state_is(car.isLocked());
         }
         throw ControllerException.from(RetCodes.err_no_car_found);
     }
 
-    private RetCodes car_state_persist(String vin) throws ControllerException {
+    private RetCodes getCarStateFromPersist(String vin) throws ControllerException {
         Car car = carService.findById(vin);
         if (car != null) {
             redis.save(car);

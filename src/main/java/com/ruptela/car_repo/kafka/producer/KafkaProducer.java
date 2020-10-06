@@ -4,14 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import static com.ruptela.car_repo.kafka.consumer.KafkaConsumer.msg_split;
+import static com.ruptela.car_repo.kafka.consumer.KafkaConsumer.msgSplit;
 
 @Component
 public class KafkaProducer {
@@ -24,7 +23,7 @@ public class KafkaProducer {
     private KafkaTemplate<Integer, String> kafkaTemplate;
 
     public void sendMessage(String vin, boolean lock) {
-        final String msg = vin + msg_split + lock;
+        final String msg = vin + msgSplit + lock;
         ListenableFuture<SendResult<Integer, String>> future = kafkaTemplate.send(topic, msg);
         future.addCallback(listenableFutureCallback(msg));
     }

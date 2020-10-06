@@ -11,7 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 abstract public class RedisRepo<ID, V> {
 
     @Value("${resource.redis_rest_api_data_time_out}")
-    private Integer time_out;
+    private Integer timeOut;
 
     protected final String key;
     protected final HashOperations hashOperations;
@@ -35,7 +35,7 @@ abstract public class RedisRepo<ID, V> {
 
     public void save(RedisTemplate rt, V v) {
         _save(v);
-        rt.expire(key, time_out, TimeUnit.MINUTES);
+        rt.expire(key, timeOut, TimeUnit.MINUTES);
     }
 
     public Map<String, Model> findAll() {

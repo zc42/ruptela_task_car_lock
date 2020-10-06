@@ -6,29 +6,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import static java.util.stream.Collectors.toList;
 
-@Service
-public class VechileAPIClient {
+@Component
+public class VehileClient {
 
-    @Value("${resource.rest_api}/vehicles/getallmakes?format=json")
-    private String all_makers;
-    @Value("${resource.rest_api}/vehicles/getmodelsformake/{maker}?format=json")
-    private String get_models;
+    @Autowired
+    private VehicleClientProperties props;
+
     @Autowired
     private RestTemplate restTemplate;
 
     public List<Maker> GetAllMakes() {
-        Object o = restTemplate.getForObject(all_makers, Object.class);
+        Object o = restTemplate.getForObject(props.getAllMakers(), Object.class);
         return o_2_dto(o, e -> Maker.from(e));
     }
 
     public List<Model> GetModels(String maker) {
-        Object o = restTemplate.getForObject(get_models, Object.class, maker);
+        Object o = restTemplate.getForObject(props.getGetModels(), Object.class, maker);
         return o_2_dto(o, e -> Model.from(e));
     }
 

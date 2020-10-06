@@ -1,13 +1,12 @@
 package com.ruptela.car_repo;
 
+import com.ruptela.car_repo.controller.CarController;
+import com.ruptela.car_repo.controller.LockController;
 import com.ruptela.car_repo.controller.parts.ControllerException;
-import com.ruptela.car_repo.controller.TopUseCaseController;
 import com.ruptela.car_repo.controller.parts.RetCodes;
 import com.ruptela.car_repo.entity.Car;
-
 import java.util.List;
 import java.util.stream.IntStream;
-
 import org.assertj.core.util.Streams;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ComponentScan(basePackages = "com.ruptela.car_repo")
 class CarRepoApplicationTest {
 
+    private final String vin = "asdfg_123456_";
+
     @Autowired
-    TopUseCaseController c;
+    CarController carCntrl;
+    @Autowired
+    LockController lockCntrl;
 
     @Test
     @Transactional
@@ -38,11 +41,11 @@ class CarRepoApplicationTest {
         List<Car> l0 = IntStream
                 .range(0, 100)
                 .boxed()
-                .map(e->car("asdfg_123456_" + e))
+                .map(e -> car(vin + e))
                 .collect(toList());
 
         List<Car> l1 = Streams
-                .stream(c.listCars())
+                .stream(carCntrl.listCars())
                 .collect(toList());
 
         assertTrue(l1.containsAll(l0));
@@ -52,15 +55,15 @@ class CarRepoApplicationTest {
     @Transactional
     void lock() throws ControllerException {
         Car car = car();
-        RetCodes r = c.lockCar(car.getVin(), true);
+        RetCodes r = lockCntrl.lockCar(car.getVin(), true);
         assertTrue(r.equals(RetCodes.ok));
 
         try {
-            c.lockCar(car.getVin(), true);
+            lockCntrl.lockCar(car.getVin(), true);
         } catch (ControllerException e) {
             assertTrue(e.equals(RetCodes.car_is_allready_in_state(true)));
         }
-        r = c.lockCar(car.getVin(), false);
+        r = lockCntrl.lockCar(car.getVin(), false);
         assertTrue(r.equals(RetCodes.ok));
     }
 
@@ -68,17 +71,17 @@ class CarRepoApplicationTest {
     @Transactional
     void get_state() throws ControllerException {
         Car car = car();
-        RetCodes state = c.get_car_state(car.getVin());
+        RetCodes state = lockCntrl.getCarState(car.getVin());
         assertTrue(state.equals(RetCodes.car_state_is(false)));
     }
 
     private Car car() throws ControllerException {
-        return car("asdf_1234");
+        return car(vin);
     }
 
     private Car car(String vin) {
         try {
-            return c.createCar(vin, "BMW", "318iS", "0123456789");
+            return carCntrl.createCar(vin, "BMW", "318iS", "0123456789");
         } catch (ControllerException e) {
             throw new RuntimeException(e);
         }

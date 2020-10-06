@@ -10,7 +10,7 @@ public class RedisModelRepo extends RedisRepo<String, Model> {
     private final RedisTemplate<String, Model> rt;
 
     public RedisModelRepo(RedisTemplate<String, Model> rt) {
-        super("MODEL", rt.opsForHash(), e -> e.getID());
+        super("MODEL", rt.opsForHash(), e -> e.getId());
         this.rt = rt;
     }
 

@@ -10,7 +10,7 @@ public class RedisMakerRepo extends RedisRepo<String, Maker> {
     private final RedisTemplate<String, Maker> rt;
 
     public RedisMakerRepo(RedisTemplate<String, Maker> rt) {
-        super("MAKER", rt.opsForHash(), e -> e.getID());
+        super("MAKER", rt.opsForHash(), e -> e.getMakeName());
         this.rt = rt;
     }
 

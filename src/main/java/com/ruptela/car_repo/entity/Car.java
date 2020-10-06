@@ -3,8 +3,14 @@ package com.ruptela.car_repo.entity;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "cars")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Car implements Serializable {
 
     @Id
@@ -14,20 +20,17 @@ public class Car implements Serializable {
     @Column(nullable = false)
     private String model;
     @Column(nullable = true)
-    private String plate_nb;
+    private String plateNb;
     @Column(nullable = false)
     private boolean locked = false;
     @Transient
     private boolean exists = true;
 
-    public Car() {
-    }
-
-    public Car(String vin, String make, String model, String plate_nb, boolean exists) {
+    public Car(String vin, String make, String model, String plateNb, boolean exists) {
         this.vin = vin;
         this.make = make;
         this.model = model;
-        this.plate_nb = plate_nb;
+        this.plateNb = plateNb;
         this.exists = exists;
     }
 
@@ -39,56 +42,8 @@ public class Car implements Serializable {
         return new Car(vin, null, null, null, false);
     }
 
-    public Car with_exists(boolean b) {
-        return new Car(vin, make, model, plate_nb, b);
-    }
-
-    public String getVin() {
-        return vin;
-    }
-
-    public void setVin(String vin) {
-        this.vin = vin;
-    }
-
-    public String getMake() {
-        return make;
-    }
-
-    public void setMake(String make) {
-        this.make = make;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getPlate_nb() {
-        return plate_nb;
-    }
-
-    public void setPlate_nb(String plate_nb) {
-        this.plate_nb = plate_nb;
-    }
-
-    public boolean isLocked() {
-        return locked;
-    }
-
-    public void setLocked(boolean locked) {
-        this.locked = locked;
-    }
-
-    public boolean isExists() {
-        return exists;
-    }
-
-    public void setExists(boolean exists) {
-        this.exists = exists;
+    public Car withExists(boolean b) {
+        return new Car(vin, make, model, plateNb, b);
     }
 
     @Override
@@ -97,7 +52,7 @@ public class Car implements Serializable {
         hash = 97 * hash + Objects.hashCode(this.vin);
         hash = 97 * hash + Objects.hashCode(this.make);
         hash = 97 * hash + Objects.hashCode(this.model);
-        hash = 97 * hash + Objects.hashCode(this.plate_nb);
+        hash = 97 * hash + Objects.hashCode(this.plateNb);
         hash = 97 * hash + (this.locked ? 1 : 0);
         hash = 97 * hash + (this.exists ? 1 : 0);
         return hash;
@@ -130,7 +85,7 @@ public class Car implements Serializable {
         if (!Objects.equals(this.model, other.model)) {
             return false;
         }
-        if (!Objects.equals(this.plate_nb, other.plate_nb)) {
+        if (!Objects.equals(this.plateNb, other.plateNb)) {
             return false;
         }
         return true;
@@ -138,7 +93,8 @@ public class Car implements Serializable {
 
     @Override
     public String toString() {
-        return "Car{" + "vin=" + vin + ", make=" + make + ", model=" + model + ", plate_nb=" + plate_nb + ", locked=" + locked + ", exists=" + exists + '}';
+        return "Car{" + "vin=" + vin + ", make=" + make + ", model=" + model + ", plateNb=" + plateNb + ", locked=" + locked + ", exists=" + exists + '}';
     }
+
 
 }

@@ -2,19 +2,22 @@ package com.ruptela.car_repo.entity;
 
 import java.io.Serializable;
 import java.util.Map;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class Maker implements Serializable {
 
-    private Integer Make_ID;
-    private String Make_Name;
+    private Integer makeId;
+    private String makeName;
     private boolean exists;
 
-    public Maker() {
-    }
-
-    public Maker(Integer Make_ID, String Make_Name, boolean exists) {
-        this.Make_ID = Make_ID;
-        this.Make_Name = Make_Name;
+    public Maker(Integer makeId, String makeName, boolean exists) {
+        this.makeId = makeId;
+        this.makeName = makeName;
         this.exists = exists;
     }
 
@@ -27,34 +30,6 @@ public class Maker implements Serializable {
                 (Integer) m.get("Make_ID"),
                 (String) m.get("Make_Name"),
                 true);
-    }
-
-    public Integer getMake_ID() {
-        return Make_ID;
-    }
-
-    public void setMake_ID(Integer make_ID) {
-        Make_ID = make_ID;
-    }
-
-    public String getMake_Name() {
-        return Make_Name;
-    }
-
-    public void setMake_Name(String make_Name) {
-        Make_Name = make_Name;
-    }
-
-    public String getID() {
-        return getMake_Name();
-    }
-
-    public boolean isExists() {
-        return exists;
-    }
-
-    public void setExists(boolean exists) {
-        this.exists = exists;
     }
 
 }

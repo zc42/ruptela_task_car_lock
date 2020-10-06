@@ -70,12 +70,12 @@
             <version>1.16.10</version>
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20160212</version>
-            <type>jar</type>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.json</groupId>-->
+<!--            <artifactId>json</artifactId>-->
+<!--            <version>20160212</version>-->
+<!--            <type>jar</type>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>

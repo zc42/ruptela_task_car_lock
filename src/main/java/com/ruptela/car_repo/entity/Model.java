@@ -2,21 +2,24 @@ package com.ruptela.car_repo.entity;
 
 import java.io.Serializable;
 import java.util.Map;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class Model implements Serializable {
 
-    private Integer Model_ID;
-    private String Make_Name;
-    private String Model_Name;
+    private Integer modelId;
+    private String makeName;
+    private String modelName;
     private boolean exists = true;
 
-    public Model() {
-    }
-
-    public Model(Integer model_ID, String make_NAME, String model_Name, boolean exist) {
-        this.Model_ID = model_ID;
-        this.Make_Name = make_NAME;
-        this.Model_Name = model_Name;
+    public Model(Integer modelId, String makeName, String modelName, boolean exist) {
+        this.modelId = modelId;
+        this.makeName = makeName;
+        this.modelName = modelName;
         this.exists = exist;
     }
 
@@ -41,44 +44,8 @@ public class Model implements Serializable {
                          false);
     }
 
-    public Integer getModel_ID() {
-        return Model_ID;
-    }
-
-    public void setModel_ID(Integer model_ID) {
-        Model_ID = model_ID;
-    }
-
-    public String getMake_Name() {
-        return Make_Name;
-    }
-
-    public void setMake_Name(String make_Name) {
-        Make_Name = make_Name;
-    }
-
-    public String getModel_Name() {
-        return Model_Name;
-    }
-
-    public void setModel_Name(String model_Name) {
-        Model_Name = model_Name;
-    }
-
-    public String ID() {
-        return getMake_Name() + "_" + getModel_Name();
-    }
-
-    public String getID() {
-        return ID();
-    }
-
-    public boolean isExists() {
-        return exists;
-    }
-
-    public void setExists(boolean exists) {
-        this.exists = exists;
+    public String getId() {
+        return makeName + "_" + modelName;
     }
 
 }

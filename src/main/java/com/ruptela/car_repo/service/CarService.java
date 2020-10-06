@@ -18,10 +18,10 @@ public class CarService {
     @Autowired
     private RedisCarRepo redis;
 
-    public Car create(String vin, String make, String model, String plate_nb) throws ControllerException {
+    public Car createCar(String vin, String make, String model, String plateNb) throws ControllerException {
 
-        Car car = Car.from(make, model, vin, plate_nb);
-        if (!vechiles.maker_model_exist(car)) {
+        Car car = Car.from(make, model, vin, plateNb);
+        if (!vechiles.makerModelExist(car)) {
             throw new ControllerException("maker/model does not exist: "
                                           + car.getMake()
                                           + " "
@@ -39,7 +39,7 @@ public class CarService {
         return car;
     }
 
-    public Iterable<Car> list_cars() {
+    public Iterable<Car> listCars() {
         return carRepository.findAll();
     }
 

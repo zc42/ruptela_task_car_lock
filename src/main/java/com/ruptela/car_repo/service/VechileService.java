@@ -1,50 +1,50 @@
 package com.ruptela.car_repo.service;
 
-import com.ruptela.car_repo.rest_client.VechileAPIClient;
 import com.ruptela.car_repo.entity.Car;
 import com.ruptela.car_repo.entity.Maker;
 import com.ruptela.car_repo.entity.Model;
 import com.ruptela.car_repo.redis.repos.RedisMakerRepo;
 import com.ruptela.car_repo.redis.repos.RedisModelRepo;
+import com.ruptela.car_repo.rest_client.VehileClient;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class VechileService {
 
     @Autowired
-    private VechileAPIClient vechileAPI;
+    private VehileClient vechileAPI;
     @Autowired
     private RedisModelRepo modelRepo;
     @Autowired
     private RedisMakerRepo makerRepo;
 
-    public boolean maker_model_exist(Car car) {
+    public boolean makerModelExist(Car car) {
         boolean b = true;
-        b = b && maker_exist(car);
-        b = b && model_exist(car);
+        b = b && makerExist(car);
+        b = b && modelExist(car);
         return b;
     }
 
-    private boolean maker_exist(Car car) {
+    private boolean makerExist(Car car) {
         return exist(car,
-                      e -> Maker.from(e),
-                      e -> makerRepo.findById(e.getID()),
-                      e -> vechileAPI.GetAllMakes(),
-                      e -> makerRepo.save(e),
-                      e -> e.isExists());
+                     e -> Maker.from(e),
+                     e -> makerRepo.findById(e.getMakeName()),
+                     e -> vechileAPI.GetAllMakes(),
+                     e -> makerRepo.save(e),
+                     e -> e.isExists());
     }
 
-    private boolean model_exist(Car car) {
+    private boolean modelExist(Car car) {
         return exist(car,
-                      e -> Model.from(e),
-                      e -> modelRepo.findById(e.getID()),
-                      e -> vechileAPI.GetModels(e.getMake_Name()),
-                      e -> modelRepo.save(e),
-                      e -> e.isExists());
+                     e -> Model.from(e),
+                     e -> modelRepo.findById(e.getId()),
+                     e -> vechileAPI.GetModels(e.getMakeName()),
+                     e -> modelRepo.save(e),
+                     e -> e.isExists());
     }
 
 //    find e -> redis
@@ -54,29 +54,29 @@ public class VechileService {
 //      not exist -> save e with status not_exits
 //    return e exist
     private <T> boolean exist(Car car,
-                              Function<Car, T> f_Car_2_T,
-                              Function<T, T> f_redis_find_by_id,
-                              Function<T, List<T>> f_rest_api,
-                              Consumer<T> f_redis_save,
-                              Function<T, Boolean> f_exists) {
+                              Function<Car, T> fMapCar2T,
+                              Function<T, T> fRedisFindById,
+                              Function<T, List<T>> fRestApi,
+                              Consumer<T> fRedisSave,
+                              Function<T, Boolean> fExists) {
 
-        T m0 = f_Car_2_T.apply(car);
-        T m1 = f_redis_find_by_id.apply(m0);
-
-        if (m1 != null) {
-            return f_exists.apply(m1);
-        }
-
-        List<T> l = f_rest_api.apply(m0);
-        l.forEach(e -> f_redis_save.accept(e));
-        m1 = f_redis_find_by_id.apply(m0);
+        T m0 = fMapCar2T.apply(car);
+        T m1 = fRedisFindById.apply(m0);
 
         if (m1 != null) {
-            return f_exists.apply(m1);
+            return fExists.apply(m1);
         }
 
-        f_redis_save.accept(m0);
-        return f_exists.apply(m0);
+        List<T> l = fRestApi.apply(m0);
+        l.forEach(e -> fRedisSave.accept(e));
+        m1 = fRedisFindById.apply(m0);
+
+        if (m1 != null) {
+            return fExists.apply(m1);
+        }
+
+        fRedisSave.accept(m0);
+        return fExists.apply(m0);
     }
 
 }

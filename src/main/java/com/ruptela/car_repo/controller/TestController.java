@@ -6,7 +6,7 @@ import com.ruptela.car_repo.entity.Maker;
 import com.ruptela.car_repo.entity.Model;
 import com.ruptela.car_repo.kafka.producer.KafkaProducer;
 import com.ruptela.car_repo.redis.repos.RedisModelRepo;
-import com.ruptela.car_repo.rest_client.VechileAPIClient;
+import com.ruptela.car_repo.rest_client.VehileClient;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import static java.util.stream.Collectors.toList;
 
+/*
+TODO: remove class..
+ */
 @Controller
 @RequestMapping(path = "/demo_test")
 public class TestController {
@@ -24,7 +27,7 @@ public class TestController {
     @Autowired
     private CarRepository carRepository;
     @Autowired
-    private VechileAPIClient vechileAPIClient;
+    private VehileClient vechileAPIClient;
     @Autowired
     private RedisModelRepo modelRepo;
     @Autowired
@@ -50,7 +53,7 @@ public class TestController {
     @GetMapping(path = "/get_model")
     public @ResponseBody
     Model GetModel(String maker, String model) {
-        Model v = modelRepo.findById(Model.from(maker.toUpperCase(), model).ID());
+        Model v = modelRepo.findById(Model.from(maker.toUpperCase(), model).getId());
         return v;
     }
 

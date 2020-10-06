@@ -9,15 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 
-
-
+@Component
 public class KafkaConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
     private CountDownLatch latch = new CountDownLatch(2);
 
-    public static final String msg_split = "@@@@";
+    public static final String msgSplit = "@@@@";
 
     @Autowired
     private CarService cars;
@@ -30,7 +30,7 @@ public class KafkaConsumer {
             return;
         }
 
-        List<String> l = Arrays.asList(msg.split(msg_split));
+        List<String> l = Arrays.asList(msg.split(msgSplit));
         if (l == null || l.isEmpty() || l.size() != 2) {
             log.error("bad msg: " + msg);
             return;
