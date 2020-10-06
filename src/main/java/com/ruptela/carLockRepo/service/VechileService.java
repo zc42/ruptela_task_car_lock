@@ -34,7 +34,7 @@ public class VechileService {
         return exist(car,
                      e -> Maker.from(e),
                      e -> makerRepo.findById(e.getMakeName()),
-                     () -> !makerRepo.findAll().values().stream().findFirst().isPresent(),
+                     () -> makerRepo.findAll().keySet().isEmpty(),
                      e -> vechileAPI.GetAllMakes(),
                      e -> makerRepo.save(e),
                      e -> e.isExists());
@@ -59,7 +59,7 @@ public class VechileService {
     private <T> boolean exist(Car car,
                               Function<Car, T> fMapCar2T,
                               Function<T, T> fRedisFindById,
-                              Supplier<Boolean> fNeedDataFromRestApi,
+                              Supplier<Boolean> fIsRedRepoEmpty,
                               Function<T, List<T>> fRestApi,
                               Consumer<T> fRedisSave,
                               Function<T, Boolean> fExists) {
@@ -71,11 +71,11 @@ public class VechileService {
             return fExists.apply(m1);
         }
 
-        if (fNeedDataFromRestApi.get()) {
+        if (fIsRedRepoEmpty.get()) {
             List<T> l = fRestApi.apply(m0);
             l.forEach(e -> fRedisSave.accept(e));
-            m1 = fRedisFindById.apply(m0);
 
+            m1 = fRedisFindById.apply(m0);
             if (m1 != null) {
                 return fExists.apply(m1);
             }
@@ -84,5 +84,4 @@ public class VechileService {
         fRedisSave.accept(m0);
         return fExists.apply(m0);
     }
-
 }
