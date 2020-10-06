@@ -20,6 +20,7 @@ public class RedisConfig {
         LettuceConnectionFactory lcf = new LettuceConnectionFactory();
         lcf.setHostName(props.getHost());
         lcf.setPort(props.getPort());
+        lcf.afterPropertiesSet();
         return lcf;
     }
 
