@@ -1,14 +1,15 @@
-spring boot app
-===========
+demo app - car lock / unlock repo
+===
+
 use cases:
 ---
 create car
 
 list created cars
 
-car lock/unlock
+car lock / unlock
 
-get car state (lock/unlock)
+get car state (lock / unlock)
 
 setup:
 --
