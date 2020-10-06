@@ -21,18 +21,18 @@ setup:
 
 create db schema
 -
-    mysql -u root -p
-    CREATE DATABASE IF NOT EXISTS ruptela_car;
+    > mysql -u root -p
+    > CREATE DATABASE IF NOT EXISTS ruptela_car;
 
 build and test:
 --
 
-    cd <project_dir>
-    mvn clean package spring-boot:repackage
+    > cd <project_dir>
+    > mvn clean package spring-boot:repackage
 
 run:
 --
-    java -jar target/CarRepo-0.0.1-SNAPSHOT.jar
+    > java -jar target/CarRepo-0.0.1-SNAPSHOT.jar
 
 
 app logic
