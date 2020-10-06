@@ -9,7 +9,7 @@ import com.ruptela.carLockRepo.rest_client.VehileClient;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
-
+import java.util.function.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +34,7 @@ public class VechileService {
         return exist(car,
                      e -> Maker.from(e),
                      e -> makerRepo.findById(e.getMakeName()),
+                     () -> !makerRepo.findAll().values().stream().findFirst().isPresent(),
                      e -> vechileAPI.GetAllMakes(),
                      e -> makerRepo.save(e),
                      e -> e.isExists());
@@ -43,6 +44,7 @@ public class VechileService {
         return exist(car,
                      e -> Model.from(e),
                      e -> modelRepo.findById(e.getId()),
+                     () -> true,
                      e -> vechileAPI.GetModels(e.getMakeName()),
                      e -> modelRepo.save(e),
                      e -> e.isExists());
@@ -57,6 +59,7 @@ public class VechileService {
     private <T> boolean exist(Car car,
                               Function<Car, T> fMapCar2T,
                               Function<T, T> fRedisFindById,
+                              Supplier<Boolean> fNeedDataFromRestApi,
                               Function<T, List<T>> fRestApi,
                               Consumer<T> fRedisSave,
                               Function<T, Boolean> fExists) {
@@ -68,12 +71,14 @@ public class VechileService {
             return fExists.apply(m1);
         }
 
-        List<T> l = fRestApi.apply(m0);
-        l.forEach(e -> fRedisSave.accept(e));
-        m1 = fRedisFindById.apply(m0);
+        if (fNeedDataFromRestApi.get()) {
+            List<T> l = fRestApi.apply(m0);
+            l.forEach(e -> fRedisSave.accept(e));
+            m1 = fRedisFindById.apply(m0);
 
-        if (m1 != null) {
-            return fExists.apply(m1);
+            if (m1 != null) {
+                return fExists.apply(m1);
+            }
         }
 
         fRedisSave.accept(m0);

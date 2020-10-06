@@ -23,8 +23,8 @@ public class CarController {
     @PostMapping(path = "/create_car")
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    Car createCar(@Valid @RequestBody CarDTO v) throws ControllerException {
-        return carService.createCar(v);
+    void createCar(@Valid @RequestBody CarDTO v) throws ControllerException {
+        carService.createCar(v);
     }
 
     @GetMapping(path = "/list_cars")

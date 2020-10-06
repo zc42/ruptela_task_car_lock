@@ -46,7 +46,7 @@ class CarRepoApplicationTest {
     @Test
     @Transactional
     void create() throws ControllerException {
-        Car car = car();
+        Car car = Car.from(car());
         assertTrue(car != null);
 
         Optional<Car> v0 = carRepo.findById(car.getVin());
@@ -63,7 +63,7 @@ class CarRepoApplicationTest {
         List<CarDTO> l0 = IntStream
                 .range(0, 100)
                 .boxed()
-                .map(e -> CarDTO.from(car(vin + e)))
+                .map(e -> car(vin + e))
                 .collect(toList());
 
         List<CarDTO> l1 = carCntrl.listCars();
@@ -73,7 +73,7 @@ class CarRepoApplicationTest {
     @Test
     @Transactional
     void lock() throws ControllerException {
-        Car car = car();
+        CarDTO car = car();
         RetCodes r = lockCntrl.lockCar(LockCarDTO.from(car.getVin(), true));
         assertTrue(r.equals(RetCodes.ok));
 
@@ -91,8 +91,8 @@ class CarRepoApplicationTest {
     @Test
     @Transactional
     void kafkaConsumer() throws ControllerException {
-        Car car = car();
-        assertTrue(!car.isLocked());
+        CarDTO car = car();
+        assertTrue(!car.getLocked());
         kafkaConsumer.consume(LockCarDTO.from(car.getVin(), true));
         assertTrue(carRepo.findById(vin).get().isLocked());
     }
@@ -100,7 +100,7 @@ class CarRepoApplicationTest {
     @Test
     @Transactional
     void getState() throws ControllerException {
-        Car car = car();
+        CarDTO car = car();
         RetCodes state = lockCntrl.getCarState(car.getVin());
         assertTrue(state.equals(RetCodes.car_state_is(false)));
 
@@ -111,14 +111,15 @@ class CarRepoApplicationTest {
 
     }
 
-    private Car car() throws ControllerException {
+    private CarDTO car() throws ControllerException {
         return car(vin);
     }
 
-    private Car car(String vin) {
+    private CarDTO car(String vin) {
         try {
-            CarDTO v = CarDTO.from(vin, "BMW", "318iS", "0123456789");
-            return carCntrl.createCar(v);
+            CarDTO v = CarDTO.from(vin, "BMW", "318iS", "0123456789", false);
+            carCntrl.createCar(v);
+            return v;
         } catch (ControllerException e) {
             throw new RuntimeException(e);
         }

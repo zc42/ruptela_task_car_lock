@@ -26,7 +26,7 @@ public class CarLockService {
         else lock/unlock
         kafka send msg -> persist db update e
         return state
-    else persistant db find e
+    else persistent db find e
     if found
         lock/unlock
         redis save e
