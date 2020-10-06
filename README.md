@@ -41,24 +41,23 @@ app logic
  --
     - check if maker and model exist
     - maker
-	    check redis for maker	
-	    if found and maker existing return true 
-	    if found and maker non-existing return false
+	    redis find e
+	    if found and existing return true 
+	    if found and non-existing return false
 	    else
 	        if redis maker repo is empty
-	            check external api for maker
+	            check external api 
 	            if found store data to redis and return true
-			    else
-				    redis store maker as non-existing
+	            else redis store data as non-existing
 	    return false
 	- model 
-	    check redis for model 
-		    if found and model exists return true 
-		    if found and model non-existing return false
+	    redis find e 
+		    if found and exists return true 
+		    if found and non-existing return false
 		    else
-			    check external api for model
+			    check external api
 			    if found store data to redis and return true
-			    else redis store model as non-existing and return false
+			    else redis store data as non-existing and return false
 	
 	if maker and model exists
 		save car to
@@ -72,18 +71,21 @@ list created cars
 car lock / unlock
 -- 
     redis find e
-		if found
-			if state not exist return err
-			else lock/unlock
-                kafka send msg -> persist db update e
-		        return state
-		else persistent db find e
-			if found
-				lock/unlock
-				redis save e
-				return state
-			else
-				redis save e with state not exist
+	if found
+		if state not exist 
+		    return err
+		else 
+		    lock/unlock
+		    kafka send msg - persist db update e
+		    return state
+	else 
+	    persistent db find e
+	    if found
+	        lock/unlock 
+	        redis save e
+	        return state
+        else
+            redis save e with state not exist
 
 get car state (lock / unlock)
 --
