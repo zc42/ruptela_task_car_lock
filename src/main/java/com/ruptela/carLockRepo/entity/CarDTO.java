@@ -2,6 +2,8 @@ package com.ruptela.carLockRepo.entity;
 
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import lombok.Getter;
 import org.springframework.validation.annotation.Validated;
 
@@ -9,11 +11,11 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class CarDTO {
 
-    @NotNull
+    @Size(min = 1, max=50)
     private String vin;
-    @NotNull
+    @Size(min = 1, max=50)
     private String make;
-    @NotNull
+    @Size(min = 1, max=50)
     private String model;
     private String plateNb;
     private Boolean locked;
@@ -85,4 +87,5 @@ public class CarDTO {
                + ", locked=" + locked
                + '}';
     }
+
 }
