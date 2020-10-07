@@ -14,12 +14,13 @@ import lombok.Setter;
 public class Car implements Serializable {
 
     @Id
+    @Column(length = 50)
     private String vin;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String make;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String model;
-    @Column(nullable = true)
+    @Column(nullable = true, length = 50)
     private String plateNb;
     @Column(nullable = false)
     private boolean locked = false;

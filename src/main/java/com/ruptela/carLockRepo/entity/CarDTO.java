@@ -28,11 +28,13 @@ public class CarDTO {
         r.model = model;
         r.plateNb = plateNb;
         return r;
-    } static public CarDTO from(String vin,
-                                String make,
-                                String model,
-                                String plateNb,
-                                boolean locked) {
+    }
+
+    static public CarDTO from(String vin,
+                              String make,
+                              String model,
+                              String plateNb,
+                              boolean locked) {
         CarDTO r = new CarDTO();
         r.vin = vin;
         r.make = make;
@@ -54,14 +56,18 @@ public class CarDTO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CarDTO carDTO = (CarDTO) o;
-        return Objects.equals(vin, carDTO.vin) &&
-                Objects.equals(make, carDTO.make) &&
-                Objects.equals(model, carDTO.model) &&
-                Objects.equals(plateNb, carDTO.plateNb) &&
-                Objects.equals(locked, carDTO.locked);
+        return Objects.equals(vin, carDTO.vin)
+               && Objects.equals(make, carDTO.make)
+               && Objects.equals(model, carDTO.model)
+               && Objects.equals(plateNb, carDTO.plateNb)
+               && Objects.equals(locked, carDTO.locked);
     }
 
     @Override
@@ -71,12 +77,12 @@ public class CarDTO {
 
     @Override
     public String toString() {
-        return "CarDTO{" +
-                "vin='" + vin + '\'' +
-                ", make='" + make + '\'' +
-                ", model='" + model + '\'' +
-                ", plateNb='" + plateNb + '\'' +
-                ", locked=" + locked +
-                '}';
+        return "CarDTO{"
+               + "vin='" + vin + '\''
+               + ", make='" + make + '\''
+               + ", model='" + model + '\''
+               + ", plateNb='" + plateNb + '\''
+               + ", locked=" + locked
+               + '}';
     }
 }
