@@ -3,14 +3,12 @@ package com.ruptela.carLockRepo.kafka.consumer;
 import com.ruptela.carLockRepo.entity.Car;
 import com.ruptela.carLockRepo.entity.LockCarDTO;
 import com.ruptela.carLockRepo.service.CarService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 
+@Log4j2
 public class KafKaConsumer {
-
-    private static final Logger log = LoggerFactory.getLogger(KafKaConsumer.class);
 
     @Autowired
     private CarService cars;

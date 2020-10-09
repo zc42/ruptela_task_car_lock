@@ -1,18 +1,14 @@
 package com.ruptela.carLockRepo.redis.repos;
 
 import com.ruptela.carLockRepo.entity.Model;
-import com.ruptela.carLockRepo.redis.RedisProperties;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
 abstract public class RedisRepo<ID, V> {
 
-    @Autowired
-    private RedisProperties props;
     private String key;
     private HashOperations hashOperations;
     private Function<V, ID> f;
@@ -33,9 +29,9 @@ abstract public class RedisRepo<ID, V> {
         _save(v);
     }
 
-    public void save(RedisTemplate rt, V v) {
+    public void save(RedisTemplate rt, V v, Integer timeOut) {
         _save(v);
-        rt.expire(key, props.getTimeOut(), TimeUnit.MINUTES);
+        rt.expire(key, timeOut, TimeUnit.MINUTES);
     }
 
     public Map<String, Model> findAll() {

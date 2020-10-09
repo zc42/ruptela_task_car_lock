@@ -2,13 +2,12 @@ package com.ruptela.carLockRepo.kafka.serialization;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
+import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.common.serialization.Deserializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Log4j2
 public class KafkaJsonDeserializer<T> implements Deserializer {
 
-    private static final Logger log = LoggerFactory.getLogger(KafkaJsonDeserializer.class);
     private Class<T> type;
 
     public KafkaJsonDeserializer(Class type) {
