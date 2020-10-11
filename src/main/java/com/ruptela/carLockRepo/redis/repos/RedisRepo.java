@@ -9,11 +9,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 abstract public class RedisRepo<ID, V> {
 
-    private String key;
+    private ID key;
     private HashOperations hashOperations;
     private Function<V, ID> f;
 
-    public RedisRepo(String key,
+    public RedisRepo(ID key,
                      HashOperations hashOperations,
                      Function<V, ID> f) {
         this.key = key;
